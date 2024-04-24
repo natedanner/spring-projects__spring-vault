@@ -127,9 +127,8 @@ class ReactiveVaultVersionedKeyValueTemplateIntegrationTests extends Integration
 			.as(StepVerifier::create)
 			.verifyComplete();
 
-		reactiveVersionedOperations.get(key, Person.class).as(StepVerifier::create).assertNext(versioned -> {
-			assertThat(versioned.getRequiredMetadata().getCustomMetadata()).containsEntry("foo", "bar");
-		}).verifyComplete();
+		reactiveVersionedOperations.get(key, Person.class).as(StepVerifier::create).assertNext(versioned ->
+			assertThat(versioned.getRequiredMetadata().getCustomMetadata()).containsEntry("foo", "bar")).verifyComplete();
 	}
 
 	@Test

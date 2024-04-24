@@ -32,7 +32,7 @@ import org.springframework.vault.support.Versioned.Metadata;
  * @author Jeroen Willemsen
  * @since 2.3
  */
-public class VaultMetadataResponse {
+public final class VaultMetadataResponse {
 
 	private final boolean casRequired;
 

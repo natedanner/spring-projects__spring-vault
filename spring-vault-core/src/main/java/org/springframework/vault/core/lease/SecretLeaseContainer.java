@@ -378,9 +378,8 @@ public class SecretLeaseContainer extends SecretLeaseEventPublisher
 
 	private void start(RequestedSecret requestedSecret, LeaseRenewalScheduler renewalScheduler) {
 
-		doStart(requestedSecret, renewalScheduler, (secrets, lease) -> {
-			onSecretsObtained(requestedSecret, lease, secrets.getRequiredData());
-		}, () -> {
+		doStart(requestedSecret, renewalScheduler, (secrets, lease) ->
+			onSecretsObtained(requestedSecret, lease, secrets.getRequiredData()), () -> {
 		});
 	}
 
@@ -549,9 +548,8 @@ public class SecretLeaseContainer extends SecretLeaseEventPublisher
 					Lease previousLease = getPreviousLease(previousLeases, requestedSecret);
 
 					try {
-						doStart(requestedSecret, renewalScheduler, (secrets, lease) -> {
-							onSecretsRotated(requestedSecret, previousLease, lease, secrets.getRequiredData());
-						}, () -> {
+						doStart(requestedSecret, renewalScheduler, (secrets, lease) ->
+							onSecretsRotated(requestedSecret, previousLease, lease, secrets.getRequiredData()), () -> {
 						});
 
 					}
@@ -631,10 +629,7 @@ public class SecretLeaseContainer extends SecretLeaseEventPublisher
 
 		logRenewalCandidate(requestedSecret, lease, "renewal");
 
-		leaseRenewal.scheduleRenewal(requestedSecret, leaseToRenew -> {
-
-			return renewAndSchedule(requestedSecret, leaseRenewal, leaseToRenew);
-		}, lease, getMinRenewal(), getExpiryThreshold());
+		leaseRenewal.scheduleRenewal(requestedSecret, leaseToRenew -> renewAndSchedule(requestedSecret, leaseRenewal, leaseToRenew), lease, getMinRenewal(), getExpiryThreshold());
 
 	}
 
@@ -807,9 +802,8 @@ public class SecretLeaseContainer extends SecretLeaseEventPublisher
 	protected void onLeaseExpired(RequestedSecret requestedSecret, Lease lease) {
 
 		if (requestedSecret.getMode() == Mode.ROTATE) {
-			doStart(requestedSecret, this.renewals.get(requestedSecret), (secrets, currentLease) -> {
-				onSecretsRotated(requestedSecret, lease, currentLease, secrets.getRequiredData());
-			}, () -> super.onLeaseExpired(requestedSecret, lease));
+			doStart(requestedSecret, this.renewals.get(requestedSecret), (secrets, currentLease) ->
+				onSecretsRotated(requestedSecret, lease, currentLease, secrets.getRequiredData()), () -> super.onLeaseExpired(requestedSecret, lease));
 		}
 		else {
 			super.onLeaseExpired(requestedSecret, lease);
@@ -995,12 +989,7 @@ public class SecretLeaseContainer extends SecretLeaseEventPublisher
 			if (lease.isRenewable()) {
 				return true;
 			}
-
-			if (!lease.hasLeaseId() && !lease.getLeaseDuration().isZero() && requestedSecret.getMode() == Mode.ROTATE) {
-				return true;
-			}
-
-			return false;
+			return !lease.hasLeaseId() && !lease.getLeaseDuration().isZero() && requestedSecret.getMode() == Mode.ROTATE;
 		}
 
 		@Nullable
@@ -1105,7 +1094,7 @@ public class SecretLeaseContainer extends SecretLeaseEventPublisher
 		private static final int STATUS_FIRED = 1;
 
 		// see AtomicIntegerFieldUpdater UPDATER
-		private volatile int status = 0;
+		private volatile int status;
 
 		private final long seconds;
 

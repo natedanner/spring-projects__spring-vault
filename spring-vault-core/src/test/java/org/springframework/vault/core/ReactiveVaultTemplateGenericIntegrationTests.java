@@ -94,9 +94,8 @@ class ReactiveVaultTemplateGenericIntegrationTests extends IntegrationTestSuppor
 		List<Map<String, String>> expected = Arrays.asList(Collections.singletonMap("hello", "world"),
 				Collections.singletonMap("hello1", "world1"));
 
-		this.vaultOperations.read("secret/mykey").as(StepVerifier::create).consumeNextWith(actual -> {
-			assertThat(actual.getRequiredData()).containsEntry("array", expected);
-		}).verifyComplete();
+		this.vaultOperations.read("secret/mykey").as(StepVerifier::create).consumeNextWith(actual ->
+			assertThat(actual.getRequiredData()).containsEntry("array", expected)).verifyComplete();
 	}
 
 	@Test
@@ -165,11 +164,9 @@ class ReactiveVaultTemplateGenericIntegrationTests extends IntegrationTestSuppor
 	@Test
 	void writeShouldReturnResponse() {
 
-		this.vaultOperations.write("auth/token/create").as(StepVerifier::create).assertNext(response -> {
+		this.vaultOperations.write("auth/token/create").as(StepVerifier::create).assertNext(response ->
 
-			assertThat(response.getAuth()).isNotNull();
-
-		}).verifyComplete();
+			assertThat(response.getAuth()).isNotNull()).verifyComplete();
 	}
 
 	@Test

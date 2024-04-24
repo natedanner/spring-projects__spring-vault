@@ -35,7 +35,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 class CubbyholeAuthenticationOperatorIntegrationTests extends CubbyholeAuthenticationIntegrationTestBase {
 
-	private WebClient webClient = TestWebClientFactory.create(Settings.createSslConfiguration());
+	private final WebClient webClient = TestWebClientFactory.create(Settings.createSslConfiguration());
 
 	@Test
 	void authenticationStepsShouldCreateWrappedToken() {
@@ -56,10 +56,9 @@ class CubbyholeAuthenticationOperatorIntegrationTests extends CubbyholeAuthentic
 		operator.getVaultToken() //
 			.as(StepVerifier::create)
 			//
-			.consumeNextWith(actual -> {
+			.consumeNextWith(actual ->
 
-				assertThat(actual).isNotEqualTo(Settings.token().getToken()).isNotNull();
-			}) //
+				assertThat(actual).isNotEqualTo(Settings.token().getToken()).isNotNull()) //
 			.verifyComplete();
 	}
 

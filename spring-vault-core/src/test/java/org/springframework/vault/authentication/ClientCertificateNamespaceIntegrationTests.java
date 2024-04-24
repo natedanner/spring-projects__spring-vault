@@ -171,10 +171,9 @@ class ClientCertificateNamespaceIntegrationTests extends IntegrationTestSupport 
 			.as(StepVerifier::create)
 			.verifyComplete();
 
-		dev.read("dev-secrets/my-secret").as(StepVerifier::create).consumeNextWith(actual -> {
+		dev.read("dev-secrets/my-secret").as(StepVerifier::create).consumeNextWith(actual ->
 
-			assertThat(actual.getRequiredData()).containsEntry("key", "dev");
-		}).verifyComplete();
+			assertThat(actual.getRequiredData()).containsEntry("key", "dev")).verifyComplete();
 	}
 
 }

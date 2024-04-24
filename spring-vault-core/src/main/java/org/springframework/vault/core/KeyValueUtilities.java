@@ -35,12 +35,12 @@ class KeyValueUtilities {
 
 		MetadataBuilder builder = Metadata.builder();
 		TemporalAccessor created_time = getDate(responseMetadata, "created_time");
-		TemporalAccessor deletion_time = getDate(responseMetadata, "deletion_time");
+		TemporalAccessor deletionTime = getDate(responseMetadata, "deletion_time");
 
 		builder.createdAt(Instant.from(created_time));
 
-		if (deletion_time != null) {
-			builder.deletedAt(Instant.from(deletion_time));
+		if (deletionTime != null) {
+			builder.deletedAt(Instant.from(deletionTime));
 		}
 
 		if (Boolean.TRUE.equals(responseMetadata.get("destroyed"))) {
@@ -127,7 +127,7 @@ class KeyValueUtilities {
 
 		Assert.notNull(path, "Path must not be null");
 
-		return path.equals("/") ? "" : path.endsWith("/") ? path : path + "/";
+		return "/".equals(path) ? "" : path.endsWith("/") ? path : path + "/";
 	}
 
 }

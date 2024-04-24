@@ -123,9 +123,8 @@ class VaultTransformTemplateIntegrationTests extends IntegrationTestSupport {
 
 		VaultTransformContext transformRequest = VaultTransformContext.builder().transformation("myssn").build();
 
-		assertThatExceptionOfType(VaultException.class).isThrownBy(() -> {
-			this.transformOperations.encode("myrole", "123-45-6789".getBytes(), transformRequest);
-		}).withMessageContaining("incorrect tweak size provided");
+		assertThatExceptionOfType(VaultException.class).isThrownBy(() ->
+			this.transformOperations.encode("myrole", "123-45-6789".getBytes(), transformRequest)).withMessageContaining("incorrect tweak size provided");
 	}
 
 	@Test

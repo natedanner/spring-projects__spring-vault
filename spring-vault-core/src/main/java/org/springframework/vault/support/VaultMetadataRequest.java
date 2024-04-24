@@ -32,7 +32,7 @@ import org.springframework.lang.Nullable;
  * Metadata</a>
  * @since 2.3
  */
-public class VaultMetadataRequest {
+public final class VaultMetadataRequest {
 
 	@JsonProperty("max_versions")
 	private final int maxVersions;

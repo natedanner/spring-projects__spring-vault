@@ -180,9 +180,8 @@ public class ReactiveLifecycleAwareSessionManager extends LifecycleAwareSessionM
 	 */
 	protected Mono<Void> revoke(VaultToken token) {
 
-		return this.webClient.post().uri("auth/token/revoke-self").headers(httpHeaders -> {
-			httpHeaders.addAll(VaultHttpHeaders.from(token));
-		})
+		return this.webClient.post().uri("auth/token/revoke-self").headers(httpHeaders ->
+			httpHeaders.addAll(VaultHttpHeaders.from(token)))
 			.retrieve()
 			.bodyToMono(String.class)
 			.doOnSubscribe(ignore -> multicastEvent(new BeforeLoginTokenRevocationEvent(token)))
@@ -417,9 +416,7 @@ public class ReactiveLifecycleAwareSessionManager extends LifecycleAwareSessionM
 				Assert.state(it.getData() != null, "Token response is null");
 				return it.getRequiredData();
 			})
-			.onErrorMap(WebClientResponseException.class, e -> {
-				return new VaultTokenLookupException(format("Token self-lookup", e), e);
-			});
+			.onErrorMap(WebClientResponseException.class, e -> new VaultTokenLookupException(format("Token self-lookup", e), e));
 	}
 
 	private static String format(String message, RuntimeException e) {

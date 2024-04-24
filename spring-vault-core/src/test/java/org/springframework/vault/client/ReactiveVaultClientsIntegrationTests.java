@@ -54,9 +54,8 @@ class ReactiveVaultClientsIntegrationTests extends IntegrationTestSupport {
 			.exchange()
 			.flatMap(it -> it.bodyToMono(String.class))
 			.as(StepVerifier::create)
-			.consumeNextWith(actual -> {
-				assertThat(actual).contains("initialized").contains("standby");
-			})
+			.consumeNextWith(actual ->
+				assertThat(actual).contains("initialized").contains("standby"))
 			.verifyComplete();
 
 		client.get()
@@ -64,9 +63,8 @@ class ReactiveVaultClientsIntegrationTests extends IntegrationTestSupport {
 			.exchange()
 			.flatMap(it -> it.bodyToMono(String.class))
 			.as(StepVerifier::create)
-			.consumeNextWith(actual -> {
-				assertThat(actual).contains("initialized").contains("standby");
-			})
+			.consumeNextWith(actual ->
+				assertThat(actual).contains("initialized").contains("standby"))
 			.verifyComplete();
 
 		assertThat(resolver).hasValue(Thread.currentThread());

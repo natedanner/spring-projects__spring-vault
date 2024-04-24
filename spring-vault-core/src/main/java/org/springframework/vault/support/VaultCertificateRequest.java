@@ -34,9 +34,9 @@ import org.springframework.util.StringUtils;
  * @author Mark Paluch
  * @author Alex Antonov
  */
-public class VaultCertificateRequest {
+public final class VaultCertificateRequest {
 
-	private static String DEFAULT_FORMAT = "der";
+	private static final String DEFAULT_FORMAT = "der";
 
 	/**
 	 * The CN of the certificate. Should match the host name.

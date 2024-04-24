@@ -112,9 +112,8 @@ class TokenExpiryRotatingSecretsIntegrationTests extends IntegrationTestSupport 
 
 		// for some reason, "failed to renew entry: policies have changed, not renewing"
 		// happens.
-		((AuthenticationEventMulticaster) sessionManager).addErrorListener(leaseEvent -> {
-			latch.countDown();
-		});
+		((AuthenticationEventMulticaster) sessionManager).addErrorListener(leaseEvent ->
+			latch.countDown());
 
 		VaultKeyValueOperations versioned = prepare().getVaultOperations()
 			.opsForKeyValue("versioned", VaultKeyValueOperationsSupport.KeyValueBackend.KV_2);

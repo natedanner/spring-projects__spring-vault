@@ -233,7 +233,8 @@ class VaultPkiTemplateIntegrationTests extends IntegrationTestSupport {
 
 	static class KeyFixture {
 
-		private final String format, privateKeyFormat;
+		private final String format;
+		private final String privateKeyFormat;
 
 		private final KeyType keyType;
 

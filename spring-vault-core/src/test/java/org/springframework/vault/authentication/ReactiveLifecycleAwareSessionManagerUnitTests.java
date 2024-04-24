@@ -193,9 +193,8 @@ class ReactiveLifecycleAwareSessionManagerUnitTests {
 
 		this.sessionManager.getSessionToken() //
 			.as(StepVerifier::create) //
-			.assertNext(it -> {
-				assertThat(it).isExactlyInstanceOf(VaultToken.class);
-			})
+			.assertNext(it ->
+				assertThat(it).isExactlyInstanceOf(VaultToken.class))
 			.verifyComplete();
 		verify(this.listener).onAuthenticationEvent(any(AfterLoginEvent.class));
 		verify(this.errorListener).onAuthenticationError(any());

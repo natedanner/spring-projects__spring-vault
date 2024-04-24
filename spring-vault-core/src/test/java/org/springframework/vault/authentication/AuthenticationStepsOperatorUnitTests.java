@@ -75,9 +75,8 @@ class AuthenticationStepsOperatorUnitTests {
 			.login(VaultToken::of);
 
 		login(steps).as(StepVerifier::create) //
-			.consumeNextWith(actual -> {
-				assertThat(actual.getToken()).startsWith("eyJhbGciOiJSUz");
-			})
+			.consumeNextWith(actual ->
+				assertThat(actual.getToken()).startsWith("eyJhbGciOiJSUz"))
 			.verifyComplete();
 	}
 
@@ -105,9 +104,8 @@ class AuthenticationStepsOperatorUnitTests {
 			.login(VaultToken::of);
 
 		login(steps).as(StepVerifier::create) //
-			.consumeNextWith(actual -> {
-				assertThat(actual.getToken()).startsWith("eyJhbGciOiJSUz");
-			})
+			.consumeNextWith(actual ->
+				assertThat(actual.getToken()).startsWith("eyJhbGciOiJSUz"))
 			.verifyComplete();
 	}
 
@@ -117,9 +115,8 @@ class AuthenticationStepsOperatorUnitTests {
 		AuthenticationSteps steps = AuthenticationSteps.fromSupplier(() -> "eyJhbGciOiJSUz").login(VaultToken::of);
 
 		login(steps).as(StepVerifier::create) //
-			.consumeNextWith(actual -> {
-				assertThat(actual.getToken()).startsWith("eyJhbGciOiJSUz");
-			})
+			.consumeNextWith(actual ->
+				assertThat(actual.getToken()).startsWith("eyJhbGciOiJSUz"))
 			.verifyComplete();
 	}
 

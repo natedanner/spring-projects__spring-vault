@@ -212,11 +212,11 @@ public class ClientHttpConnectorFactory {
 
 				SSLContext sslContext = getSSLContext(sslConfiguration);
 
-				String[] enabledProtocols = !sslConfiguration.getEnabledProtocols().isEmpty()
-						? sslConfiguration.getEnabledProtocols().toArray(new String[0]) : null;
+				String[] enabledProtocols = sslConfiguration.getEnabledProtocols().isEmpty()
+						? null : sslConfiguration.getEnabledProtocols().toArray(new String[0]);
 
-				String[] enabledCipherSuites = !sslConfiguration.getEnabledCipherSuites().isEmpty()
-						? sslConfiguration.getEnabledCipherSuites().toArray(new String[0]) : null;
+				String[] enabledCipherSuites = sslConfiguration.getEnabledCipherSuites().isEmpty()
+						? null : sslConfiguration.getEnabledCipherSuites().toArray(new String[0]);
 
 				BasicClientTlsStrategy tlsStrategy = new BasicClientTlsStrategy(sslContext, (endpoint, sslEngine) -> {
 
@@ -361,11 +361,11 @@ public class ClientHttpConnectorFactory {
 
 				SSLContext sslContext = getSSLContext(sslConfiguration);
 
-				String[] enabledProtocols = !sslConfiguration.getEnabledProtocols().isEmpty()
-						? sslConfiguration.getEnabledProtocols().toArray(new String[0]) : null;
+				String[] enabledProtocols = sslConfiguration.getEnabledProtocols().isEmpty()
+						? null : sslConfiguration.getEnabledProtocols().toArray(new String[0]);
 
-				String[] enabledCipherSuites = !sslConfiguration.getEnabledCipherSuites().isEmpty()
-						? sslConfiguration.getEnabledCipherSuites().toArray(new String[0]) : null;
+				String[] enabledCipherSuites = sslConfiguration.getEnabledCipherSuites().isEmpty()
+						? null : sslConfiguration.getEnabledCipherSuites().toArray(new String[0]);
 
 				SSLParameters parameters = new SSLParameters();
 				parameters.setProtocols(enabledProtocols);

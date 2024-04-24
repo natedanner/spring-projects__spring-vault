@@ -127,7 +127,7 @@ abstract class ReactiveVaultKeyValueAccessor implements ReactiveVaultKeyValueOpe
 	 * @return mapped value.
 	 */
 	<T> Mono<T> doRead(String path, ParameterizedTypeReference<T> typeReference) {
-		return doRead((webClient) -> webClient.get().uri(path),
+		return doRead(webClient -> webClient.get().uri(path),
 				new ResponseFunction<>(cr -> cr.toEntity(typeReference)));
 	}
 
@@ -139,7 +139,7 @@ abstract class ReactiveVaultKeyValueAccessor implements ReactiveVaultKeyValueOpe
 	 * @return mapped value.
 	 */
 	<T> Mono<T> doRead(String path, Class<T> typeReference) {
-		return doRead((webClient) -> webClient.get().uri(path),
+		return doRead(webClient -> webClient.get().uri(path),
 				new ResponseFunction<>(cr -> cr.toEntity(typeReference)));
 	}
 
@@ -170,7 +170,7 @@ abstract class ReactiveVaultKeyValueAccessor implements ReactiveVaultKeyValueOpe
 	<T> Mono<T> doRead(Function<WebClient, RequestHeadersSpec<?>> callback,
 			Function<ClientResponse, Mono<T>> responseFunction) {
 		return this.reactiveVaultOperations
-			.doWithSession((restOperations) -> callback.apply(restOperations).exchangeToMono(responseFunction));
+			.doWithSession(restOperations -> callback.apply(restOperations).exchangeToMono(responseFunction));
 	}
 
 	/**

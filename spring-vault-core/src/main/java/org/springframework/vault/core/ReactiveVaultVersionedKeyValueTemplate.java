@@ -197,7 +197,7 @@ public class ReactiveVaultVersionedKeyValueTemplate extends ReactiveVaultKeyValu
 			return defaults.apply(clientResponse);
 		};
 
-		return doRead((webClient) -> webClient.get().uri(path), responseFunction);
+		return doRead(webClient -> webClient.get().uri(path), responseFunction);
 	}
 
 }

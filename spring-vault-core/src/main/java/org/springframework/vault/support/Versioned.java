@@ -51,7 +51,7 @@ import org.springframework.util.CollectionUtils;
  * @see Metadata
  * @since 2.1
  */
-public class Versioned<T> {
+public final class Versioned<T> {
 
 	private final @Nullable T data;
 
@@ -198,10 +198,12 @@ public class Versioned<T> {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
+		if (this == o) {
 			return true;
-		if (!(o instanceof Versioned))
+		}
+		if (!(o instanceof Versioned)) {
 			return false;
+		}
 		Versioned<?> versioned = (Versioned<?>) o;
 		return Objects.equals(this.data, versioned.data) && Objects.equals(this.version, versioned.version)
 				&& Objects.equals(this.metadata, versioned.metadata);
@@ -216,7 +218,7 @@ public class Versioned<T> {
 	/**
 	 * Value object representing version metadata such as creation/deletion time.
 	 */
-	public static class Metadata {
+	public static final class Metadata {
 
 		private final Instant createdAt;
 
@@ -294,7 +296,7 @@ public class Versioned<T> {
 		public String toString() {
 
 			StringBuilder customMetadataString = new StringBuilder(", customMetadata=[");
-			if (customMetadata != null && customMetadata.keySet().size() > 0) {
+			if (customMetadata != null && !customMetadata.keySet().isEmpty()) {
 
 				for (String key : customMetadata.keySet()) {
 					customMetadataString.append(key).append(":").append(customMetadata.get(key)).append(" ");
@@ -310,7 +312,7 @@ public class Versioned<T> {
 		/**
 		 * Builder for {@link Metadata} objects.
 		 */
-		public static class MetadataBuilder {
+		public static final class MetadataBuilder {
 
 			private @Nullable Instant createdAt;
 
@@ -422,7 +424,7 @@ public class Versioned<T> {
 	 *
 	 * @author Mark Paluch
 	 */
-	public static class Version {
+	public static final class Version {
 
 		static final Version UNVERSIONED = new Version(0);
 
@@ -474,10 +476,12 @@ public class Versioned<T> {
 
 		@Override
 		public boolean equals(Object o) {
-			if (this == o)
+			if (this == o) {
 				return true;
-			if (!(o instanceof Version other))
+			}
+			if (!(o instanceof Version other)) {
 				return false;
+			}
 			return this.version == other.version;
 		}
 

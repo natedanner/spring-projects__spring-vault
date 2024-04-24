@@ -145,7 +145,7 @@ public interface VaultPkiOperations {
 		/**
 		 * Privacy-Enhanced Mail (PEM) format in base64.
 		 */
-		PEM;
+		PEM
 
 	}
 

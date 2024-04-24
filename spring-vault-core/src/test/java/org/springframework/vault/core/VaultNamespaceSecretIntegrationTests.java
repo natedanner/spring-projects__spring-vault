@@ -180,9 +180,8 @@ class VaultNamespaceSecretIntegrationTests extends IntegrationTestSupport {
 
 		assertThat(marketing.read("marketing-secrets/my-secret")).isNotNull();
 
-		reactiveMarketing.read("marketing-secrets/my-secret").as(StepVerifier::create).consumeNextWith(actual -> {
-			assertThat(actual.getRequiredData()).containsEntry("key", "marketing");
-		}).verifyComplete();
+		reactiveMarketing.read("marketing-secrets/my-secret").as(StepVerifier::create).consumeNextWith(actual ->
+			assertThat(actual.getRequiredData()).containsEntry("key", "marketing")).verifyComplete();
 	}
 
 	@Test
@@ -209,13 +208,11 @@ class VaultNamespaceSecretIntegrationTests extends IntegrationTestSupport {
 		ReactiveVaultTemplate reactiveMarketing = new ReactiveVaultTemplate(this.marketingWebClientBuilder,
 				() -> Mono.just(VaultToken.of(this.marketingToken)));
 
-		reactiveMarketing.doWithSession(webClient -> {
-			return webClient.get()
+		reactiveMarketing.doWithSession(webClient -> webClient.get()
 				.uri("sys/init")
 				.header(VaultHttpHeaders.VAULT_NAMESPACE, "")
 				.exchange()
-				.flatMap(it -> it.bodyToMono(Map.class));
-		})
+				.flatMap(it -> it.bodyToMono(Map.class)))
 			.as(StepVerifier::create)
 			.assertNext(actual -> assertThat(actual).containsEntry("initialized", true))
 			.verifyComplete();
